@@ -1,4 +1,4 @@
-package com.example.localdatabaseexample.Database
+package com.example.myfirstapp.Database
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,16 +6,16 @@ import androidx.room.Insert
 import androidx.room.Query
 
 @Dao
-interface EmployeeDao {
-    @Query("SELECT * FROM Employee")
-    fun getAll(): List<Employee>
+interface MovieDao {
+    @Query("SELECT * FROM Movie")
+    fun getAll(): List<Movie>
 
-    @Query("SELECT * FROM Employee WHERE :employeeID = id")
-    fun loadByID(employeeID: Int): Employee
+    @Query("SELECT * FROM Movie WHERE :movie_id = id")
+    fun loadByID(movie_id: Int): Movie
 
     @Insert
-    fun insert(employee: Employee)
+    fun insert(movie: Movie)
 
     @Delete
-    fun delete(employee: Employee)
+    fun delete(movie: Movie)
 }

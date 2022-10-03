@@ -2,21 +2,22 @@ package com.example.myfirstapp.Database
 
 import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.Room.databaseBuilder
 import androidx.room.RoomDatabase
 
-@Database(entities = arrayOf(Employee::class), version = 1)
-abstract class EmployeeDatabase : RoomDatabase() {
-    abstract fun employeeDao(): EmployeeDao
+@Database(entities = arrayOf(Movie::class), version = 1)
+abstract class MovieDatabase : RoomDatabase() {
 
+    abstract fun movieDao(): MovieDao
+
+    // singleton instance of movieDB
     companion object {
-        private var INSTANCE: EmployeeDatabase? = null
+        private var INSTANCE: MovieDatabase? = null
 
-        fun getAppDatabase(context: Context): EmployeeDatabase? {
+        fun getAppDatabase(context: Context): MovieDatabase? {
+            // create db if doesn't exist
             if (INSTANCE == null) {
-                INSTANCE = databaseBuilder(context.applicationContext, EmployeeDatabase::class.java, "EmployeeDatabase")
-                    //Do not allow main thread queries in your final prototypes!
+                INSTANCE = databaseBuilder(context.applicationContext, MovieDatabase::class.java, "MovieDatabase")
                     .allowMainThreadQueries()
                     .build()
             }
