@@ -1,4 +1,4 @@
-package com.example.myfirstapp.Database
+package com.example.myfirstapp.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -9,5 +9,6 @@ data class Movie(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     @ColumnInfo(name = "name") val name: String,
     @ColumnInfo(name = "year") val year: Int,
+    @ColumnInfo(name = "image_url") val movie_url: String,
     @ColumnInfo(name = "plot") val plot: String
 )

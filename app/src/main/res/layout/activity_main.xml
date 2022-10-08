@@ -32,4 +32,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName2" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/movieView"
+        android:layout_width="480dp"
+        android:layout_height="619dp"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="234dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
