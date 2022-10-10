@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
         return movies;
     }
-
+/*
     fun sendMessage(view: View){
         // respond to button
         val editText = findViewById<EditText>(R.id.editTextTextPersonName2);
@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, DisplayMessageActivity::class.java).apply { putExtra(EXTRA_MESSAGE, message)}
         startActivity(intent);
     }
-
+*/
 
     // FUNCTIONS TO HOOK INTO LIFECYCLE
     override fun onStart() {
