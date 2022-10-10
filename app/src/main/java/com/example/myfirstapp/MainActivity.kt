@@ -32,28 +32,34 @@ class MainActivity : AppCompatActivity() {
         val movies = createListOfMovies();
 
         // add to database
-        // initDatabase(movies);
+        //initDatabase(movies);
+        //Log.i("database init", database.movieDao().loadByID(1).name);
+
 
         // recycler view
         var recyclerView: RecyclerView = findViewById(R.id.movieView)
         recyclerView.setHasFixedSize(true)
         //var layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        //recyclerView.adapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
         recyclerView.adapter = MovieAdapter(movies)
+
     }
+
 
     fun initDatabase(movies: List<Movie>){
         // get singleton instance of database
         database = MovieDatabase.getAppDatabase(this)!!
 
         // & populate if empty
+        Log.i("database", "isEmpty? " + database.movieDao().getAll().isEmpty())
         if (database.movieDao().getAll().isEmpty()) {
             for (movie in movies) {
+                Log.i("database", "adding " + movie.name)
                 database.movieDao().insert(movie)
             }
         }
 
-        Log.i("test database name of id 0", database.movieDao().loadByID(0).name);
     }
 
     fun createListOfMovies() : ArrayList<Movie> {
@@ -109,3 +115,14 @@ class MainActivity : AppCompatActivity() {
         Log.i("Test", "DESTROY")
     }
 }
+
+/* on press in recycler view?
+in adapter
+
+inner class listViewHolder
+
+override fun onClick(v: view) {
+}
+if (adapterPosition) = recyclerPosisiotn.NP-POSITOIN {
+listener.onItemClick (}
+ */
