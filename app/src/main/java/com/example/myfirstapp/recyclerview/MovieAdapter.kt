@@ -10,6 +10,9 @@ import com.example.myfirstapp.database.Movie;
 
 class MovieAdapter(private val data : ArrayList<Movie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
+    //lateinit var recyclerViewInterface : RecyclerViewInterface
+    var onItemClick : ((Movie) -> Unit)? = null
+
     inner class ViewHolder(item : View): RecyclerView.ViewHolder(item){
         val movieName : TextView = item.findViewById(R.id.movieName)
         val movieYear : TextView = item.findViewById(R.id.movieYear)
@@ -23,9 +26,14 @@ class MovieAdapter(private val data : ArrayList<Movie>) : RecyclerView.Adapter<M
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.movieName.text = data[position].name
         holder.movieYear.text = data[position].year.toString()
+        holder.itemView.setOnClickListener {
+            onItemClick?.invoke(data[position])
+        }
+
     }
 
     override fun getItemCount(): Int {
         return data.size
     }
+
 }

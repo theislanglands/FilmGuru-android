@@ -11,10 +11,10 @@ class DisplayMessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_display_message)
 
         // gets EXTRA MESSAGE from intent
-        val message = intent.getStringExtra(EXTRA_MESSAGE);
+        // val message = intent.getStringExtra(EXTRA_MESSAGE);
 
         // sets the text in the textView to message
-        val textView = findViewById<TextView>(R.id.textView).apply { text = message }
+        //val textView = findViewById<TextView>(R.id.textView).apply { text = message }
         // textView.text = message
     }
 }

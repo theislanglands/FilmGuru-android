@@ -4,11 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.myfirstapp.database.Movie;
 import com.example.myfirstapp.database.MovieDatabase;
 import com.example.myfirstapp.recyclerview.MovieAdapter
@@ -16,13 +13,14 @@ import com.example.myfirstapp.recyclerview.MovieAdapter
 // val: Read-only local variables They can be assigned a value only once. (constant)
 // var: Variables that can be reassigned
 
-const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
+// const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
 
 
 class MainActivity : AppCompatActivity() {
 
     // lateinit = declare variable without instantiation
     lateinit var database : MovieDatabase;
+    private lateinit var movieAdapter : MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         System.out.println("onCrete");
@@ -36,22 +34,18 @@ class MainActivity : AppCompatActivity() {
         initDatabase(movies);
         Log.i("database", "init getting #2" + database.movieDao().loadByID(2).name);
 
-
         // recycler view
         var recyclerView: RecyclerView = findViewById(R.id.movieView)
         recyclerView.setHasFixedSize(true)
-        //var layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
-        //recyclerView.adapter = MovieAdapter(movies)
-
-
-        // sending data to MovieDetails
-        val intent = Intent(this, MovieDetails::class.java)
-        intent.putExtra("MovieId", 2);
-        startActivity(intent);
-
-
+        movieAdapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
+        recyclerView.adapter = movieAdapter
+        movieAdapter.onItemClick = {
+            // sending data to MovieDetails
+            val intent = Intent(this, MovieDetails::class.java)
+            intent.putExtra("MovieId", it.id);
+            startActivity(intent);
+        }
     }
 
 
@@ -121,6 +115,14 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.i("Test", "DESTROY")
     }
+/*
+    override fun onItemClick(position: Int) {
+        TODO("Not yet implemented")
+        // what happends when a user click the item
+    }
+
+ */
+
 }
 
 /* on press in recycler view?
