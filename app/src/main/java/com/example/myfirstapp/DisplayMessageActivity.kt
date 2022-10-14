@@ -14,6 +14,7 @@ class DisplayMessageActivity : AppCompatActivity() {
         val message = intent.getStringExtra(EXTRA_MESSAGE);
 
         // sets the text in the textView to message
-        val textView = findViewById<TextView>(R.id.textView).apply { text = message };
+        val textView = findViewById<TextView>(R.id.textView).apply { text = message }
+        // textView.text = message
     }
 }

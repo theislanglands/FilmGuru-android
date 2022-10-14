@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         // add to database
         initDatabase(movies);
-        Log.i("database init", database.movieDao().loadByID(2).name);
+        Log.i("database", "init getting #2" + database.movieDao().loadByID(2).name);
 
 
         // recycler view
@@ -45,13 +45,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView.adapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
         //recyclerView.adapter = MovieAdapter(movies)
 
-        /*
+
         // sending data to MovieDetails
         val intent = Intent(this, MovieDetails::class.java)
-        intent.putExtra("MovieId", 1);
+        intent.putExtra("MovieId", 2);
         startActivity(intent);
 
-         */
+
     }
 
 
