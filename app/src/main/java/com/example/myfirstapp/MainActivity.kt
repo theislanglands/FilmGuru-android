@@ -18,6 +18,7 @@ import com.example.myfirstapp.recyclerview.MovieAdapter
 
 const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
 
+
 class MainActivity : AppCompatActivity() {
 
     // lateinit = declare variable without instantiation
@@ -32,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         val movies = createListOfMovies();
 
         // add to database
-        //initDatabase(movies);
-        //Log.i("database init", database.movieDao().loadByID(1).name);
+        initDatabase(movies);
+        Log.i("database init", database.movieDao().loadByID(2).name);
 
 
         // recycler view
@@ -41,9 +42,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView.setHasFixedSize(true)
         //var layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        //recyclerView.adapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
-        recyclerView.adapter = MovieAdapter(movies)
+        recyclerView.adapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
+        //recyclerView.adapter = MovieAdapter(movies)
 
+        /*
+        // sending data to MovieDetails
+        val intent = Intent(this, MovieDetails::class.java)
+        intent.putExtra("MovieId", 1);
+        startActivity(intent);
+
+         */
     }
 
 
@@ -59,16 +67,15 @@ class MainActivity : AppCompatActivity() {
                 database.movieDao().insert(movie)
             }
         }
-
     }
 
     fun createListOfMovies() : ArrayList<Movie> {
         val movies = ArrayList<Movie>()
         // generate 4 movies
-        var movie1 = Movie(0,"Pinnocchio", 2022, "https://image.tmdb.org/t/p/original/g8sclIV4gj1TZqUpnL82hKOTK3B.jpg", "A wooden puppet embarks on a thrilling adventure to become a real boy.")
-        var movie2 = Movie(1,"Bullet Train", 2022, "https://image.tmdb.org/t/p/original/tVxDe01Zy3kZqaZRNiXFGDICdZk.jpg", "Unlucky assassin Ladybug is determined to do his job peacefully after one too many gigs gone off the rails. Fate, however, may have other plans, as Ladybug's latest mission puts him on a collision course with lethal adversaries from around the globe—all with connected, yet conflicting, objectives—on the world's fastest train.")
-        var movie3 = Movie(2,"Samaritan", 2022, "https://image.tmdb.org/t/p/original/vwq5iboxYoaSpOmEQrhq9tHicq7.jpg", "Thirteen year old Sam Cleary  suspects that his mysteriously reclusive neighbor Mr. Smith is actually the legendary vigilante Samaritan, who was reported dead 20 years ago. With crime on the rise and the city on the brink of chaos, Sam makes it his mission to coax his neighbor out of hiding to save the city from ruin.")
-        var movie4 = Movie(3,"Lightyear", 2022, "https://image.tmdb.org/t/p/original/65WFr1ZMAbEniIh4jEhbRG9OHHN.jpg", "Legendary Space Ranger Buzz Lightyear embarks on an intergalactic adventure alongside a group of ambitious recruits and his robot companion Sox")
+        var movie1 = Movie(1,"Pinnocchio", 2022, "https://image.tmdb.org/t/p/original/g8sclIV4gj1TZqUpnL82hKOTK3B.jpg", "A wooden puppet embarks on a thrilling adventure to become a real boy.")
+        var movie2 = Movie(2,"Bullet Train", 2022, "https://image.tmdb.org/t/p/original/tVxDe01Zy3kZqaZRNiXFGDICdZk.jpg", "Unlucky assassin Ladybug is determined to do his job peacefully after one too many gigs gone off the rails. Fate, however, may have other plans, as Ladybug's latest mission puts him on a collision course with lethal adversaries from around the globe—all with connected, yet conflicting, objectives—on the world's fastest train.")
+        var movie3 = Movie(3,"Samaritan", 2022, "https://image.tmdb.org/t/p/original/vwq5iboxYoaSpOmEQrhq9tHicq7.jpg", "Thirteen year old Sam Cleary  suspects that his mysteriously reclusive neighbor Mr. Smith is actually the legendary vigilante Samaritan, who was reported dead 20 years ago. With crime on the rise and the city on the brink of chaos, Sam makes it his mission to coax his neighbor out of hiding to save the city from ruin.")
+        var movie4 = Movie(4,"Lightyear", 2022, "https://image.tmdb.org/t/p/original/65WFr1ZMAbEniIh4jEhbRG9OHHN.jpg", "Legendary Space Ranger Buzz Lightyear embarks on an intergalactic adventure alongside a group of ambitious recruits and his robot companion Sox")
 
         // adding to list
         movies.add(movie1);
