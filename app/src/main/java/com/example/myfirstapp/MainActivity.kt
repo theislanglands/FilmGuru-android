@@ -115,23 +115,29 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         Log.i("Test", "DESTROY")
     }
+}
+
+
 /*
-    override fun onItemClick(position: Int) {
-        TODO("Not yet implemented")
-        // what happends when a user click the item
+Thread {
+   //Do your database´s operations here
+}.start()
+
+
+
+// works (pre-java8)
+Thread t = new Thread() {
+    public void run() {
+        mAppDatabase.userDao().insert(u);
     }
+};
+t.start();
+
+// works (java8)
+new Thread(() -> {
+    mAppDatabase.userDao().insert(u);
+}).start();
+
 
  */
 
-}
-
-/* on press in recycler view?
-in adapter
-
-inner class listViewHolder
-
-override fun onClick(v: view) {
-}
-if (adapterPosition) = recyclerPosisiotn.NP-POSITOIN {
-listener.onItemClick (}
- */
