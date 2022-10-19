@@ -19,7 +19,6 @@ abstract class MovieDatabase : RoomDatabase() {
             // create db if doesn't exist
             if (INSTANCE == null) {
                 INSTANCE = databaseBuilder(context.applicationContext, MovieDatabase::class.java, "MovieDatabase")
-                    .allowMainThreadQueries()
                     .build()
             }
             return INSTANCE

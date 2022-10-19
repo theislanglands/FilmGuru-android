@@ -10,7 +10,6 @@ import com.example.myfirstapp.database.Movie;
 
 class MovieAdapter(private val data : ArrayList<Movie>) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    //lateinit var recyclerViewInterface : RecyclerViewInterface
     var onItemClick : ((Movie) -> Unit)? = null
 
     inner class ViewHolder(item : View): RecyclerView.ViewHolder(item){

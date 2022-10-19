@@ -13,9 +13,6 @@ import com.example.myfirstapp.recyclerview.MovieAdapter
 // val: Read-only local variables They can be assigned a value only once. (constant)
 // var: Variables that can be reassigned
 
-// const val EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE"
-
-
 class MainActivity : AppCompatActivity() {
 
     // lateinit = declare variable without instantiation
@@ -23,38 +20,35 @@ class MainActivity : AppCompatActivity() {
     private lateinit var movieAdapter : MovieAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        System.out.println("onCrete");
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        database = MovieDatabase.getAppDatabase(this)!!
 
-        // generate list of 4 movie data objects
-        val movies = createListOfMovies();
-
-        // add to database
-        initDatabase(movies);
-        Log.i("database", "init getting #2" + database.movieDao().loadByID(2).name);
+        // generate list of 4 movie data objects and add to database
+        Thread{ populateDatabase(createListOfMovies()) }.start()
 
         // recycler view
         var recyclerView: RecyclerView = findViewById(R.id.movieView)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        movieAdapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
-        recyclerView.adapter = movieAdapter
-        movieAdapter.onItemClick = {
-            // sending data to MovieDetails
-            val intent = Intent(this, MovieDetails::class.java)
-            intent.putExtra("MovieId", it.id);
-            startActivity(intent);
-        }
+
+        Thread {
+            movieAdapter = MovieAdapter(database.movieDao().getAll() as ArrayList<Movie>)
+            runOnUiThread(Runnable {
+                movieAdapter.onItemClick = {
+                    // sending data to MovieDetails
+                    val intent = Intent(this, MovieDetails::class.java)
+                    intent.putExtra("MovieId", it.id);
+                    startActivity(intent);
+                }
+                recyclerView.adapter = movieAdapter
+            })
+        }.start()
     }
 
-
-    fun initDatabase(movies: List<Movie>){
-        // get singleton instance of database
-        database = MovieDatabase.getAppDatabase(this)!!
-
-        // & populate if empty
-        Log.i("database", "isEmpty? " + database.movieDao().getAll().isEmpty())
+    fun populateDatabase(movies: List<Movie>){
+        // populates database if empty
+        Log.i("database", "Database isEmpty? " + database.movieDao().getAll().isEmpty())
         if (database.movieDao().getAll().isEmpty()) {
             for (movie in movies) {
                 Log.i("database", "adding " + movie.name)
@@ -79,65 +73,31 @@ class MainActivity : AppCompatActivity() {
 
         return movies;
     }
-/*
-    fun sendMessage(view: View){
-        // respond to button
-        val editText = findViewById<EditText>(R.id.editTextTextPersonName2);
-        val message = editText.text.toString();
-        Log.i("message", message);
-        val intent = Intent(this, DisplayMessageActivity::class.java).apply { putExtra(EXTRA_MESSAGE, message)}
-        startActivity(intent);
-    }
-*/
 
     // FUNCTIONS TO HOOK INTO LIFECYCLE
     override fun onStart() {
         super.onStart()
-        Log.i("Test", "STARTED")
+        Log.i("Lifecycle", "STARTED")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.i("Test", "RESUMED")
+        Log.i("Lifecycle", "RESUMED")
     }
 
     override fun onPause() {
         super.onPause()
-        Log.i("Test","PAUSE");
+        Log.i("Lifecycle","PAUSE");
     }
 
     override fun onStop() {
         super.onStop()
-        Log.i("Test", "STOP")
+        Log.i("Lifecycle", "STOP")
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i("Test", "DESTROY")
+        Log.i("Lifecycle", "DESTROY")
     }
 }
-
-
-/*
-Thread {
-   //Do your database´s operations here
-}.start()
-
-
-
-// works (pre-java8)
-Thread t = new Thread() {
-    public void run() {
-        mAppDatabase.userDao().insert(u);
-    }
-};
-t.start();
-
-// works (java8)
-new Thread(() -> {
-    mAppDatabase.userDao().insert(u);
-}).start();
-
-
- */
 
