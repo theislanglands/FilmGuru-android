@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">My First App</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="app_name">Film Guru</string>
 
     <string name="movie_details_header">Name and year of film</string>
     <string name="movie_details_plot">Plot of film</string>

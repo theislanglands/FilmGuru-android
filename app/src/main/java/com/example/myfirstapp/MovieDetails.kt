@@ -12,32 +12,31 @@ import com.squareup.picasso.Picasso
 
 class MovieDetails : AppCompatActivity() {
 
-    lateinit var database : MovieDatabase
-    lateinit var selectedMovie : Movie
-
+    lateinit var database: MovieDatabase
+    lateinit var selectedMovie: Movie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
 
-        val movieId = intent.getIntExtra("MovieId",0);
+        // getting selected movie ID
+        val movieId = intent.getIntExtra("MovieId", 0)
         Log.i("transfer", "movie id recieved from intent " + movieId.toString())
 
-        // sets the text in movieDetails
+        // get fields for data in movieDetails
         val headerTextView = findViewById<TextView>(R.id.textViewMovieDetailsHeader)
         val plotTextView = findViewById<TextView>(R.id.textViewMovieDetailsPlot)
         val filmPoster = findViewById<ImageView>(R.id.imageViewMoviePoster)
 
+        // Getting selected movie from database and setting fields
         database = MovieDatabase.getAppDatabase(this)!!
         Thread {
-        selectedMovie = database.movieDao().loadByID(movieId)
-
-        Log.i("transfer", "movie name: " + database.movieDao().loadByID(movieId))
-
-        runOnUiThread(Runnable {
-            headerTextView.text = selectedMovie.name + " " + selectedMovie.year
-            plotTextView.text = selectedMovie.plot
-            Picasso.get().load(selectedMovie.movie_url).into(filmPoster)
+            selectedMovie = database.movieDao().loadByID(movieId)
+            Log.i("transfer", "movie name: " + database.movieDao().loadByID(movieId))
+            runOnUiThread(Runnable {
+                headerTextView.text = selectedMovie.name + " " + selectedMovie.year
+                plotTextView.text = selectedMovie.plot
+                Picasso.get().load(selectedMovie.movie_url).into(filmPoster)
             })
         }.start()
     }
